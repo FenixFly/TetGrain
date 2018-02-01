@@ -1,6 +1,9 @@
 # Build folders
 [Bb]uild*
 
+# CMake files
+CMakeLists.txt.user
+
 # Prerequisites
 *.d
 
