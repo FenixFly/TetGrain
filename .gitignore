@@ -1,5 +1,5 @@
 # Build folders
-[Bb]uild
+[Bb]uild*
 
 # Prerequisites
 *.d
