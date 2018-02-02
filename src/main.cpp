@@ -1,4 +1,11 @@
+#include "common.h"
+#include "grainmesh.h"
+#include "iotetgen.h"
+
+using namespace grain;
+
 int main()
 {
-	return 0;
+    GrainMesh gmsh;
+    return 0;
 }
