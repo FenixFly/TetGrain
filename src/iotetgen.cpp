@@ -71,6 +71,26 @@ int grain::saveNodeFile(std::string filename, GrainMesh *mesh)
     return 0;
 }
 
+int grain::saveFaceFile(std::string filename, GrainMesh * mesh)
+{
+	int mTrianglesCount = mesh->getTrianglesCount();
+	auto mTriangles = mesh->getTriangles();
+	auto mTrianglesLabels = mesh->getTrianglesLabels();
+	std::ofstream fout(filename);
+	fout << mTrianglesCount << " " << 1 << "\n";
+	for (int i = 0; i < mTrianglesCount; i++)
+	{
+		fout << i << " "
+			<< mTriangles->at(i).x << " "
+			<< mTriangles->at(i).y << " "
+			<< mTriangles->at(i).z << " "
+			<< mTrianglesLabels->at(i) << "\n";
+	}
+	fout.close();
+
+	return 0;
+}
+
 int grain::saveEleFile(std::string filename, GrainMesh *mesh)
 {
     int mTetraCount = mesh->getTetraCount();
