@@ -5,6 +5,7 @@ PROJECT (TetGrain CXX)
 # Add a compiler flag
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall")
 
+
 # Include sources
 set(SOURCE_EXE
     src/grainmesh.h
@@ -15,6 +16,10 @@ set(SOURCE_EXE
     src/common.cpp
     src/main.cpp)
 
+set(SOURCE_NETGEN
+	src/netgenadaptor.h
+	src/netgenadaptor.cpp)
+
 
 # Create executable file
-add_executable(TetGrain ${SOURCE_EXE})
+add_executable(TetGrain ${SOURCE_EXE} ${SOURCE_NETGEN})
