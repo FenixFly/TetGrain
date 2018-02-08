@@ -15,14 +15,14 @@ int grain::GrainMesh::getVerticesCount()
     return vertices.size();
 }
 
-std::shared_ptr<std::vector<vec3d>> grain::GrainMesh::getVertices()
+std::vector<vec3d>* grain::GrainMesh::getVertices()
 {
-    return std::shared_ptr<std::vector<vec3d>>(&vertices);
+    return &vertices;
 }
 
-std::shared_ptr<std::vector<char>> grain::GrainMesh::getVerticesLabels()
+std::vector<char>* grain::GrainMesh::getVerticesLabels()
 {
-    return std::shared_ptr<std::vector<char>>(&verticesLabels);
+    return &verticesLabels;
 }
 
 int grain::GrainMesh::getTrianglesCount()
@@ -30,14 +30,14 @@ int grain::GrainMesh::getTrianglesCount()
     return triangles.size();
 }
 
-std::shared_ptr<std::vector<vec3i>> grain::GrainMesh::getTriangles()
+std::vector<vec3i>* grain::GrainMesh::getTriangles()
 {
-    return std::shared_ptr<std::vector<vec3i>>(&triangles);
+    return &triangles;
 }
 
-std::shared_ptr<std::vector<char>> grain::GrainMesh::getTrianglesLabels()
+std::vector<char>* grain::GrainMesh::getTrianglesLabels()
 {
-    return std::shared_ptr<std::vector<char>>(&trianglesLabels);
+    return &trianglesLabels;
 }
 
 int grain::GrainMesh::getTetraCount()
@@ -45,14 +45,14 @@ int grain::GrainMesh::getTetraCount()
     return tetra.size();
 }
 
-std::shared_ptr<std::vector<vec4i>> grain::GrainMesh::getTetra()
+std::vector<vec4i>* grain::GrainMesh::getTetra()
 {
-    return std::shared_ptr<std::vector<vec4i>>(&tetra);
+    return &tetra;
 }
 
-std::shared_ptr<std::vector<char>> grain::GrainMesh::getTetraLabels()
+std::vector<char>* grain::GrainMesh::getTetraLabels()
 {
-    return std::shared_ptr<std::vector<char>>(&tetraLabels);
+    return &tetraLabels;
 }
 
 void grain::GrainMesh::setVertices(std::vector<vec3d> &newVertices)
