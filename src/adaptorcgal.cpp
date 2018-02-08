@@ -55,67 +55,42 @@ int grain::AdaptorCGAL::importSurface(grain::GrainMesh* gmsh)
 {
 	Build_Poly<HalfedgeDS> surface(gmsh);
 	polyhedron.delegate(surface);
-	//CGAL_assertion(polyhedron.is_triangle(polyhedron.halfedges_begin()));
-	std::cout << polyhedron.size_of_vertices() << "\n";
-	std::cout << polyhedron.size_of_facets() << "\n";
-	std::cout << polyhedron.size_of_halfedges() << "\n";
-
-	//Read image
-	//if (!image.read(fname)) {
-	//	std::cerr << "Error: Cannot read file " << fname << std::endl;
-	//	return EXIT_FAILURE;
-	//}
 	return 0;
 }
 
-int grain::AdaptorCGAL::setupParameters()
+int grain::AdaptorCGAL::setupParameters(double facet_angle, double facet_size, double facet_distance,
+	double cell_radius_edge_ratio, double cell_size)
 {
+	_facet_angle = facet_angle;
+	_facet_size = facet_size;
+	_facet_distance = facet_distance;
+	_cell_radius_edge_ratio = cell_radius_edge_ratio;
+	_cell_size = cell_size;
 	return 0;
 }
 
 int grain::AdaptorCGAL::runMeshing()
 {
-	
-	//const char* fname = "E:/data/elephant.off";
-	//// Create input polyhedron
-	//std::ifstream input(fname);
-	//input >> polyhedron;
-	//if (input.fail()) {
-	//	std::cerr << "Error: Cannot read file " << fname << std::endl;
-	//	return EXIT_FAILURE;
-	//}
-	//input.close();
-
 	if (!CGAL::is_triangle_mesh(polyhedron)) {
 		std::cerr << "Input geometry is not triangulated." << std::endl;
-		std::cout << "Input geometry is not triangulated." << std::endl;
 		return EXIT_FAILURE;
 	}
-	// Create domain
 	Mesh_domain domain(polyhedron);
-	std::cout << polyhedron.size_of_vertices() << "\n";
-	std::cout << polyhedron.size_of_facets() << "\n";
-	std::cout << polyhedron.size_of_halfedges() << "\n";
-
 	// Mesh criteria (no cell_size set)
-	Mesh_criteria criteria(facet_angle = 30, facet_size = 2, facet_distance = 0.8,
-		cell_radius_edge_ratio = 3);
+	Mesh_criteria criteria(
+		facet_angle = _facet_angle, 
+		facet_size = _facet_size, 
+		facet_distance = _facet_distance,
+		cell_radius_edge_ratio = _cell_radius_edge_ratio);
 
 	// Mesh generation
 	c3t3 = CGAL::make_mesh_3<C3t3>(domain, criteria, no_perturb(), no_exude());
-	// Output
-	std::ofstream medit_file("E:/data/out1.mesh");
-	c3t3.output_to_medit(medit_file);
-	medit_file.close();
 	// Set tetrahedron size (keep cell_radius_edge_ratio), ignore facets
-	Mesh_criteria new_criteria(cell_radius_edge_ratio = 3, cell_size = 1.0);
+	Mesh_criteria new_criteria(
+		cell_radius_edge_ratio = _cell_radius_edge_ratio,
+		cell_size = _cell_size);
 	// Mesh refinement
 	CGAL::refine_mesh_3(c3t3, domain, new_criteria);
-	// Output
-	//medit_file.open("E:/data/out2.mesh");
-	//c3t3.output_to_medit(medit_file);
-
-
 	return 0;
 }
 
@@ -131,7 +106,7 @@ grain::GrainMesh * grain::AdaptorCGAL::exportVolume()
 
 	std::cout << "Vertices count: " << c3t3.triangulation().number_of_vertices() << "\n";
 	std::cout << "Tetra count: " << c3t3.number_of_cells() << "\n";
-	//std::cout << "Faces count: " << c3t3.triangulation().number_of_finite_facets() << "\n";
+	std::cout << "Faces count: " << c3t3.triangulation().number_of_facets() << "\n";
 
 	// Export vertices //
 	std::vector<vec3d> vertices =

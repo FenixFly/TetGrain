@@ -38,11 +38,20 @@ namespace grain
 		AdaptorCGAL();
 		~AdaptorCGAL();
 		int importSurface(grain::GrainMesh* gmsh);
-		int setupParameters();
+		int setupParameters(double facet_angle, double face_size, double facet_distance, 
+			double cell_radius_edge_ratio, double cell_size);
 		int runMeshing();
 		grain::GrainMesh* exportVolume();
 		double getMeshingTime();
 	private:
+		//Parameters
+		double _facet_angle = 30.0;
+		double _facet_size = 0.15;
+		double _facet_distance = 0.08;
+		double _cell_radius_edge_ratio = 3.0;
+		double _cell_size = 1.0;
+
+
 		Polyhedron polyhedron;
 		C3t3 c3t3;
 	};
