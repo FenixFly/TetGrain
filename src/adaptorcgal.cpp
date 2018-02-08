@@ -17,55 +17,43 @@ grain::AdaptorCGAL::~AdaptorCGAL()
 template <class HDS>
 class Build_Poly : public CGAL::Modifier_base<HDS> {
 public:
-	Build_Poly() {}
+	grain::GrainMesh* msh;
+	Build_Poly(grain::GrainMesh* mesh) 
+		{ msh = mesh; }
 	void operator()(HDS& hds) {
 		// Postcondition: hds is a valid polyhedral surface.
 		CGAL::Polyhedron_incremental_builder_3<HDS> B(hds, true);
 		B.begin_surface(
-			4,// vertices 
-			4,// faces 
-			12);// hafledges
+			msh->getVerticesCount(),// vertices 
+			msh->getTrianglesCount(),// faces 
+			msh->getTrianglesCount() * 3);// hafledges
 		typedef typename HDS::Vertex   Vertex;
 		typedef typename Vertex::Point Point;
-		B.add_vertex(Point(0.1, 0.1, 0));
-		B.add_vertex(Point(1, 0, 0));
-		B.add_vertex(Point(0, 1, 0));
-		B.add_vertex(Point(0, 0, 1));
+
+		std::vector<vec3d>* points = msh->getVertices();
+
+		for (int i = 0; i < msh->getVerticesCount(); i++)
+			B.add_vertex(Point(points->at(i).x, points->at(i).y, points->at(i).z));
+
+		std::vector<vec3i>* trig = msh->getTriangles();
 		
-		B.begin_facet();
-		B.add_vertex_to_facet(0);
-		B.add_vertex_to_facet(1);
-		B.add_vertex_to_facet(3);
-		B.end_facet();
-
-		B.begin_facet();
-		B.add_vertex_to_facet(0);
-		B.add_vertex_to_facet(2);
-		B.add_vertex_to_facet(1);
-		B.end_facet();
-
-		B.begin_facet();
-		B.add_vertex_to_facet(0);
-		B.add_vertex_to_facet(3);
-		B.add_vertex_to_facet(2);
-		B.end_facet();
-
-		B.begin_facet();
-		B.add_vertex_to_facet(1);
-		B.add_vertex_to_facet(2);
-		B.add_vertex_to_facet(3);
-		B.end_facet();
-
-
+		for (int i = 0; i < msh->getTrianglesCount(); i++)
+		{
+			B.begin_facet();
+			B.add_vertex_to_facet(trig->at(i).x);
+			B.add_vertex_to_facet(trig->at(i).y);
+			B.add_vertex_to_facet(trig->at(i).z);
+			B.end_facet();
+		}
 
 		B.end_surface();
 	}
 };
 typedef Polyhedron::HalfedgeDS             HalfedgeDS;
 
-int grain::AdaptorCGAL::importSurface()
+int grain::AdaptorCGAL::importSurface(grain::GrainMesh* gmsh)
 {
-	Build_Poly<HalfedgeDS> surface;
+	Build_Poly<HalfedgeDS> surface(gmsh);
 	polyhedron.delegate(surface);
 	//CGAL_assertion(polyhedron.is_triangle(polyhedron.halfedges_begin()));
 	std::cout << polyhedron.size_of_vertices() << "\n";

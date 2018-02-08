@@ -37,7 +37,7 @@ namespace grain
 	public:
 		AdaptorCGAL();
 		~AdaptorCGAL();
-		int importSurface();
+		int importSurface(grain::GrainMesh* gmsh);
 		int setupParameters();
 		int runMeshing();
 		grain::GrainMesh* exportVolume();

@@ -8,8 +8,9 @@ using namespace grain;
 int main()
 {
     GrainMesh gmsh;
+	gmsh.makeStubTetra();
 	AdaptorCGAL adaptor;
-	adaptor.importSurface();
+	adaptor.importSurface(&gmsh);
 	adaptor.runMeshing();
 	GrainMesh * res = adaptor.exportVolume();
 	saveNodeFile("tst.node", res);
