@@ -61,7 +61,7 @@ int grain::saveNodeFile(std::string filename, GrainMesh *mesh)
     fout << mPointsCount <<  " " << 3 << " " << 0 << " " << 0 << " " << 0 << "\n";
     for (int i = 0; i < mPointsCount; i++)
     {
-        fout << i << " "
+        fout << i+1 << " "
              << mPoints->at(i).x << " "
              << mPoints->at(i).y << " "
              << mPoints->at(i).z << " "

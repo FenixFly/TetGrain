@@ -9,6 +9,7 @@ int main()
 {
     GrainMesh gmsh;
 	AdaptorCGAL adaptor;
+	adaptor.importSurface();
 	adaptor.runMeshing();
 	GrainMesh * res = adaptor.exportVolume();
 	saveNodeFile("tst.node", res);

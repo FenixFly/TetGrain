@@ -43,6 +43,7 @@ namespace grain
 		grain::GrainMesh* exportVolume();
 		double getMeshingTime();
 	private:
+		Polyhedron polyhedron;
 		C3t3 c3t3;
 	};
 }
