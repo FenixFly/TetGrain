@@ -40,6 +40,7 @@ endif()
 if(BUILD_STATIC)
 	add_library(TetGrain ${SOURCE_EXE} ${SOURCE_NETGEN} ${SOURCE_CGAL})
 else()
+	set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 	add_library(TetGrain SHARED ${SOURCE_EXE} ${SOURCE_NETGEN} ${SOURCE_CGAL})
 endif()
 

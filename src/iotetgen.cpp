@@ -27,6 +27,43 @@ int grain::readNodeFile(std::string filename, GrainMesh * mesh)
     return 0;
 }
 
+int grain::readFaceFile(std::string filename, GrainMesh *mesh)
+{
+	std::ifstream fin(filename, std::ifstream::in);
+	int fCount = 0;
+	int trash = 0;
+	bool marker = false;
+
+	fin >> fCount;
+	fin >> trash;
+
+	if (trash == 1) // Have boundary marker
+		marker = true;
+	std::vector<vec3i> newFacet(fCount);
+	std::vector<char> newFLabels(fCount);
+	
+	for (int i = 0; i < fCount; i++)
+	{
+		fin >> trash
+			>> newFacet[i].x
+			>> newFacet[i].y
+			>> newFacet[i].z;
+		if (marker)
+			fin >> newFLabels[i];
+
+		// Vertices in file start from 1, not from 0
+		newFacet[i].x--;
+		newFacet[i].y--;
+		newFacet[i].z--;
+	}
+	fin.close();
+	mesh->setTriangles(newFacet);
+	if (marker)
+		mesh->setTrianglesLabels(newFLabels);
+
+	return 0;
+}
+
 int grain::readEleFile(std::string filename, GrainMesh *mesh)
 {
     std::ifstream fin(filename, std::ifstream::in);

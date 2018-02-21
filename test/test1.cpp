@@ -1,6 +1,5 @@
 #include "common.h"
 #include "grainmesh.h"
-#include "iotetgen.h"
 
 using grain::GrainMesh;
 
