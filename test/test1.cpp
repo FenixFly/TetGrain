@@ -6,8 +6,8 @@ using grain::GrainMesh;
 
 int main(int argc, char** argv)
 {
-	//GrainMesh gmsh;
-	//gmsh.makeStubTetra();
+	GrainMesh gmsh;
+	gmsh.makeStubTetra();
 
     return 0;
 }
