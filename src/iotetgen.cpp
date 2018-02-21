@@ -55,17 +55,17 @@ int grain::readEleFile(std::string filename, GrainMesh *mesh)
 int grain::saveNodeFile(std::string filename, GrainMesh *mesh)
 {
     int mPointsCount = mesh->getVerticesCount();
-    auto mPoints = mesh->getVertices();
-    auto mPointsLabels = mesh->getVerticesLabels();
+    std::vector<vec3d>* mPoints = mesh->getVertices();
+	std::vector<char>* mPointsLabels = mesh->getVerticesLabels();
     std::ofstream fout(filename);
     fout << mPointsCount <<  " " << 3 << " " << 0 << " " << 0 << " " << 0 << "\n";
     for (int i = 0; i < mPointsCount; i++)
     {
-        fout << i << " "
+        fout << i+1 << " "
              << mPoints->at(i).x << " "
              << mPoints->at(i).y << " "
              << mPoints->at(i).z << " "
-             << mPointsLabels->at(i) << "\n";
+             << (int) mPointsLabels->at(i) << "\n";
     }
     fout.close();
     return 0;
@@ -74,8 +74,8 @@ int grain::saveNodeFile(std::string filename, GrainMesh *mesh)
 int grain::saveFaceFile(std::string filename, GrainMesh * mesh)
 {
 	int mTrianglesCount = mesh->getTrianglesCount();
-	auto mTriangles = mesh->getTriangles();
-	auto mTrianglesLabels = mesh->getTrianglesLabels();
+	std::vector<vec3i>* mTriangles = mesh->getTriangles();
+	std::vector<char>* mTrianglesLabels = mesh->getTrianglesLabels();
 	std::ofstream fout(filename);
 	fout << mTrianglesCount << " " << 1 << "\n";
 	for (int i = 0; i < mTrianglesCount; i++)
@@ -84,7 +84,7 @@ int grain::saveFaceFile(std::string filename, GrainMesh * mesh)
 			<< mTriangles->at(i).x << " "
 			<< mTriangles->at(i).y << " "
 			<< mTriangles->at(i).z << " "
-			<< mTrianglesLabels->at(i) << "\n";
+			<< (int) mTrianglesLabels->at(i) << "\n";
 	}
 	fout.close();
 
@@ -94,8 +94,8 @@ int grain::saveFaceFile(std::string filename, GrainMesh * mesh)
 int grain::saveEleFile(std::string filename, GrainMesh *mesh)
 {
     int mTetraCount = mesh->getTetraCount();
-    auto mTetra = mesh->getTetra();
-    auto mTetraLabels = mesh->getTetraLabels();
+	std::vector<vec4i>* mTetra = mesh->getTetra();
+	std::vector<char>* mTetraLabels = mesh->getTetraLabels();
     std::ofstream fout(filename);
     fout << mTetraCount << " " << 4 << " " << 1 << "\n";
     fout.flush();
@@ -106,7 +106,7 @@ int grain::saveEleFile(std::string filename, GrainMesh *mesh)
               << mTetra->at(i).y << " "
               << mTetra->at(i).z << " "
               << mTetra->at(i).w << " "
-              << mTetraLabels->at(i) << "\n";
+              << (int) mTetraLabels->at(i) << "\n";
     }
     fout.close();
     return 0;

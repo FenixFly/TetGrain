@@ -90,3 +90,20 @@ void grain::GrainMesh::setTetraLabels(std::vector<char> &newLabels)
     tetraLabels.clear();
     tetraLabels = newLabels;
 }
+
+void grain::GrainMesh::makeStubTetra()
+{
+	vertices.clear();
+	vertices = std::vector<vec3d>(4);
+	vertices.at(0).x = 0.1; vertices.at(0).y = 0.1; vertices.at(0).z = 0.1;
+	vertices.at(1).x = 1.0; vertices.at(1).y = 0.0; vertices.at(1).z = 0.0;
+	vertices.at(2).x = 0.0; vertices.at(2).y = 1.0; vertices.at(2).z = 0.0;
+	vertices.at(3).x = 0.0; vertices.at(3).y = 0.0; vertices.at(3).z = 1.0;
+
+	triangles.clear();
+	triangles = std::vector<vec3i>(4);
+	triangles.at(0).x = 0; triangles.at(0).y = 1; triangles.at(0).z = 3;
+	triangles.at(1).x = 0; triangles.at(1).y = 2; triangles.at(1).z = 1;
+	triangles.at(2).x = 0; triangles.at(2).y = 3; triangles.at(2).z = 2;
+	triangles.at(3).x = 1; triangles.at(3).y = 2; triangles.at(3).z = 3;
+}

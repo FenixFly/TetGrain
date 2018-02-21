@@ -6,6 +6,9 @@ using namespace grain;
 
 int main()
 {
+
     GrainMesh gmsh;
+	gmsh.makeStubTetra();
+
     return 0;
 }

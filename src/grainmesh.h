@@ -22,6 +22,7 @@ public:
     void setTrianglesLabels(std::vector<char> &newLabels);
     void setTetra(std::vector<vec4i> &newTetra);
     void setTetraLabels(std::vector<char> &newLabels);
+	void makeStubTetra();
 protected:
     std::vector<vec3d> vertices;
     std::vector<char> verticesLabels;
