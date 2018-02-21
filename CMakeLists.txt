@@ -5,9 +5,11 @@ PROJECT (TetGrain CXX)
 # Add a compiler flag
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall")
 
+# Testing options
+option(USE_TESTS "ENABLE TESTS" OFF)
+
 # Adaptor options
 option(USE_CGAL "USE CGAL MESHER" OFF)
-
 
 # Include sources
 set(SOURCE_EXE
@@ -16,13 +18,11 @@ set(SOURCE_EXE
     src/iotetgen.h
     src/iotetgen.cpp
     src/common.h
-    src/common.cpp
-    src/main.cpp)
+    src/common.cpp)
 
 set(SOURCE_NETGEN
 	src/netgenadaptor.h
 	src/netgenadaptor.cpp)
-
 
 SET(SOURCE_CGAL)
 if(USE_CGAL)
@@ -33,11 +33,14 @@ if(USE_CGAL)
 		src/adaptorcgal.cpp)
 endif()
 
+# Create library
+add_library(TetGrain ${SOURCE_EXE} ${SOURCE_NETGEN} ${SOURCE_CGAL})
 
-
-# Create executable file
-add_executable(TetGrain ${SOURCE_EXE} ${SOURCE_NETGEN} ${SOURCE_CGAL})
+if(USE_TESTS)
+	add_subdirectory(test build/test)
+endif()
 
 if(USE_CGAL)
 	target_link_libraries(TetGrain ${CGAL_LIBS})
 endif()
+
