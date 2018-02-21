@@ -1,4 +1,6 @@
 project(tests)
+enable_testing()
+
 include_directories(../src)
 
 set(test1_source test1.cpp)
@@ -19,3 +21,4 @@ if(USE_CGAL)
 	target_link_libraries(testcgal1 ${TetGrain})
 endif()
 
+add_test(NAME Test1 COMMAND test1)

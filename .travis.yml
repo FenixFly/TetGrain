@@ -10,6 +10,6 @@ compiler:
 before_script:
   - mkdir build
   - cd build
-  - cmake ..
+  - cmake -DCMAKE_BUILD_TYPE=Release -DUSE_TESTS=ON ..
 
-script: make
+script: make && make test
