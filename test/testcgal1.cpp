@@ -1,4 +1,5 @@
 #include "common.h"
+#include "adaptorcgal.h"
 
 int main(int argc, char** argv)
 {
