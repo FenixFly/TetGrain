@@ -1,4 +1,3 @@
-project(tests)
 enable_testing()
 
 include_directories(../src)
@@ -14,6 +13,10 @@ target_link_libraries(test2 TetGrain)
 set(test3_source test3.cpp)
 add_executable(test3 ${test3_source})
 target_link_libraries(test3 TetGrain)
+
+set(test4_source test4.cpp)
+add_executable(test4 ${test4_source})
+target_link_libraries(test4 TetGrain)
 
 if(USE_CGAL)
 	set(testcgal1_source testcgal1.cpp)

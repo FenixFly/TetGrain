@@ -16,6 +16,8 @@ option(USE_CGAL "USE CGAL MESHER" OFF)
 
 # Include sources
 set(SOURCE_EXE
+    src/grainratio.h
+    src/grainratio.cpp
     src/grainmesh.h
     src/grainmesh.cpp
     src/iotetgen.h
